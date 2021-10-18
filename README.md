@@ -1,15 +1,10 @@
-<center>
+<p align="center">
+  <img src="./logo.svg" width="100">
+</p>
 
-<img src="./logo.svg" width="100">
+<h1 align="center">Assemble</h1>
 
-# Assemble
-
-Project Documentation Generator
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/@sunnysingh/assemble.svg)](https://npmjs.org/package/@sunnysingh/assemble)
-[![Downloads/week](https://img.shields.io/npm/dw/@sunnysingh/assemble.svg)](https://npmjs.org/package/@sunnysingh/assemble)
-[![License](https://img.shields.io/npm/l/@sunnysingh/assemble.svg)](https://github.com/sunnysingh/assemble/blob/master/package.json)
+<p align="center">Project Documentation Generator</p>
 
 </center>
 
