@@ -15,10 +15,9 @@
 ---
 
 <!-- toc -->
-
-- [What is Assemble?](#what)
-- [Usage](#usage)
-- [Commands](#commands)
+* [What is Assemble?](#what-is-assemble)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # What is Assemble?
@@ -48,31 +47,28 @@ The site can then easily be deployed to any static site host such as GitHub Page
 # Usage
 
 <!-- usage -->
-
 ```sh-session
-$ npm install -g @sunnysingh/assemble
+$ npm install -g @assembledocs/cli
 $ assemble COMMAND
 running command...
 $ assemble (-v|--version|version)
-@sunnysingh/assemble/0.0.0 darwin-x64 node-v14.15.5
+@assembledocs/cli/0.0.0 darwin-x64 node-v14.15.5
 $ assemble --help [COMMAND]
 USAGE
   $ assemble COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`assemble build [PATH]`](#assemble-build-path)
-- [`assemble help [COMMAND]`](#assemble-help-command)
+* [`assemble build [PATH]`](#assemble-build-path)
+* [`assemble help [COMMAND]`](#assemble-help-command)
 
 ## `assemble build [PATH]`
 
-Build static site.
+build static site
 
 ```
 USAGE
@@ -80,11 +76,7 @@ USAGE
 
 OPTIONS
   -h, --help           show CLI help
-  --distPath=distPath  [default: .assemble]
-
-EXAMPLE
-  $ assemble build
-  Static site built!
+  --distPath=distPath  [default: .assembledocs/dist]
 ```
 
 _See code: [src/commands/build.ts](https://github.com/sunnysingh/assemble/blob/v0.0.0/src/commands/build.ts)_
@@ -105,5 +97,4 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
-
 <!-- commandsstop -->

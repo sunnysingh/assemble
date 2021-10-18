@@ -4,6 +4,7 @@
     "oclif-typescript"
   ],
   "rules": {
-    "semi": 0
+    "semi": 0,
+    "indent": 0
   }
 }

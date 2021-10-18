@@ -1,5 +1,5 @@
 {
-  "name": "@sunnysingh/assemble",
+  "name": "@assembledocs/cli",
   "description": "Project Documentation Generator",
   "version": "0.0.0",
   "author": "Sunny Singh @sunnysingh",
@@ -12,7 +12,8 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.3",
     "fs-extra": "^10.0.0",
-    "tiny-glob": "^0.2.9",
+    "lodash.get": "^4.4.2",
+    "serve": "^12.0.1",
     "tslib": "^1.14.1"
   },
   "devDependencies": {
@@ -50,11 +51,13 @@
   },
   "repository": "sunnysingh/assemble",
   "scripts": {
+    "dev": "./bin/run build && serve .assembledocs/dist",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "readme": "oclif-dev readme"
   },
   "types": "lib/index.d.ts"
 }

@@ -1,25 +1,16 @@
 import {Command, flags} from '@oclif/command';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import glob from 'tiny-glob';
+import globby from 'globby';
 
-import {createHtml} from '../html-template';
-import {escapeRegExp} from '../utils';
+import {renderDocument, renderSidebar, Link} from '../templates';
 
 export default class Build extends Command {
-  static description = 'Build static site.';
-
-  static examples = [
-    `$ assemble build
-Static site built!
-`,
-  ];
+  static description = 'build static site';
 
   static flags = {
     help: flags.help({char: 'h'}),
-
-    // FIXME: Breaks if a path is a nested dir. Example: `.assemble/dist`
-    distPath: flags.string({default: '.assemble'}),
+    distPath: flags.string({default: '.assembledocs/dist'}),
   };
 
   static args = [{name: 'path', default: process.cwd()}];
@@ -27,29 +18,48 @@ Static site built!
   async run() {
     const {args, flags} = this.parse(Build);
 
-    // TODO: Use .gitignore in project dir if available.
-    // TODO: Ignore any dirs that start with a period.
-    const ignorePaths = ['node_modules', 'dist', 'build', flags.distPath];
+    const ignorePaths = [flags.distPath];
 
     const baseDistPath = path.join(args.path, flags.distPath);
 
-    const rootMarkdownPaths = await glob(`${args.path}/*.md`);
-    const nestedMarkdownPaths = await glob(
-      `${args.path}/!(${ignorePaths.map(escapeRegExp).join('|')})/**/*.md`
-    );
-    const allMarkdownPaths = [...rootMarkdownPaths, ...nestedMarkdownPaths];
+    const markdownPaths = await globby('**/*.md', {
+      cwd: args.path,
+      ignore: ignorePaths,
+      gitignore: true,
+      dot: false,
+    });
+
+    const sidebarLinks: Link[] = [];
+    const level = {result: sidebarLinks};
+
+    markdownPaths.forEach(path => {
+      path.split('/').reduce<Record<string, any>>((prev, name) => {
+        if (!prev[name]) {
+          prev[name] = {result: []};
+          prev.result.push({name, path, children: prev[name].result});
+        }
+
+        return prev[name];
+      }, level);
+    });
+
+    await fs.emptyDir(baseDistPath);
 
     await Promise.all(
-      allMarkdownPaths.map(async markdownPath => {
+      markdownPaths.map(async markdownPath => {
         await fs.ensureDir(path.join(baseDistPath, path.dirname(markdownPath)));
         return fs.copyFile(markdownPath, path.join(baseDistPath, markdownPath));
       })
     );
 
-    const html = createHtml();
+    const html = renderDocument();
+    const sidebar = renderSidebar(sidebarLinks);
 
-    await fs.outputFile(path.join(baseDistPath, 'index.html'), html);
+    await Promise.all([
+      fs.outputFile(path.join(baseDistPath, 'index.html'), html),
+      fs.outputFile(path.join(baseDistPath, '_sidebar.md'), sidebar),
+    ]);
 
-    this.log('Static site build!');
+    this.log('✨ Static site built!');
   }
 }

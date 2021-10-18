@@ -1,12 +1,12 @@
-type CreateHtmlArgs = {
+type Document = {
   title?: string;
   favicon?: string;
 };
 
-export function createHtml({
+export function renderDocument({
   title = 'Docs',
   favicon = '📖',
-}: CreateHtmlArgs = {}) {
+}: Document = {}) {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -32,7 +32,6 @@ export function createHtml({
           name: '${title}',
           nameLink: '/#/',
           loadSidebar: true,
-          },
 
           // Use TOC Plugin instead of the sidebar.
           maxLevel: 0,
@@ -41,7 +40,7 @@ export function createHtml({
             tocMaxLevel: 5,
             target: 'h2, h3, h4, h5, h6'
           },
-        }
+        };
       </script>
 
       <!-- TODO: Copy assets locally for offline support -->
