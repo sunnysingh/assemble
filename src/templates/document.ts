@@ -2,12 +2,14 @@ type Document = {
   title?: string;
   favicon?: string;
   basePath?: string;
+  nameLink?: string;
 };
 
 export function renderDocument({
   title = 'Docs',
   favicon = '📖',
   basePath = '/',
+  nameLink = `/#${basePath}`,
 }: Document = {}) {
   return `
   <!DOCTYPE html>
@@ -32,7 +34,7 @@ export function renderDocument({
       <script>
         window.$docsify = {
           name: '${title}',
-          nameLink: '/#/',
+          nameLink: '${nameLink}',
           basePath: '${basePath}',
           loadSidebar: true,
 
