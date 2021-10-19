@@ -1,3 +1,0 @@
-third
-
-![image](./mountains.png)

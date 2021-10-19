@@ -1,0 +1,3 @@
+# Contributing
+
+Example contribution doc.
