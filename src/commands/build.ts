@@ -2,6 +2,9 @@ import {Command, flags} from '@oclif/command';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import globby from 'globby';
+import remark from 'remark';
+import vfile from 'vfile';
+import remarkCopyLinkedFiles from 'remark-copy-linked-files';
 
 import {renderDocument, renderSidebar, Link} from '../templates';
 
@@ -47,8 +50,19 @@ export default class Build extends Command {
 
     await Promise.all(
       markdownPaths.map(async markdownPath => {
+        const markdownSource = await fs.readFile(markdownPath);
+
+        const markdownOutput = await remark()
+          .use(remarkCopyLinkedFiles, {
+            destinationDir: path.join(baseDistPath, path.dirname(markdownPath)),
+          })
+          .process(vfile({path: markdownPath, contents: markdownSource}));
+
         await fs.ensureDir(path.join(baseDistPath, path.dirname(markdownPath)));
-        return fs.copyFile(markdownPath, path.join(baseDistPath, markdownPath));
+        await fs.outputFile(
+          path.join(baseDistPath, markdownPath),
+          markdownOutput.contents
+        );
       })
     );
 
