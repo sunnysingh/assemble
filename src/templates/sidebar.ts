@@ -18,7 +18,5 @@ export function renderLink(link: Link, indentLevel = 0): string {
 }
 
 export function renderSidebar(links: Link[]): string {
-  console.log(JSON.stringify(links, null, 2));
-
   return links.map(link => renderLink(link)).join('\n');
 }
