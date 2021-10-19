@@ -72,6 +72,7 @@ export default class Build extends Command {
     await Promise.all([
       fs.outputFile(path.join(baseDistPath, 'index.html'), html),
       fs.outputFile(path.join(baseDistPath, '_sidebar.md'), sidebar),
+      fs.outputFile(path.join(baseDistPath, '.nojekyll'), ''),
     ]);
 
     this.log('✨ Static site built!');
