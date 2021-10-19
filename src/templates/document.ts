@@ -1,11 +1,13 @@
 type Document = {
   title?: string;
   favicon?: string;
+  basePath?: string;
 };
 
 export function renderDocument({
   title = 'Docs',
   favicon = '📖',
+  basePath = '/',
 }: Document = {}) {
   return `
   <!DOCTYPE html>
@@ -31,6 +33,7 @@ export function renderDocument({
         window.$docsify = {
           name: '${title}',
           nameLink: '/#/',
+          basePath: '${basePath}',
           loadSidebar: true,
 
           // Use TOC Plugin instead of the sidebar.
@@ -38,7 +41,7 @@ export function renderDocument({
           subMaxLevel: 0,
           toc: {
             tocMaxLevel: 5,
-            target: 'h2, h3, h4, h5, h6'
+            target: 'h1, h2, h3, h4, h5, h6'
           },
         };
       </script>

@@ -14,7 +14,7 @@ jobs:
         run: npm test
 
       - name: Build
-        run: npm run build
+        run: npm run build -- --basePath='/assemble/' --title='Assemble Docs'
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5

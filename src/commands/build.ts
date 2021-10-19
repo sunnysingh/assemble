@@ -13,6 +13,8 @@ export default class Build extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
+    title: flags.string({default: 'Docs'}),
+    basePath: flags.string({default: '/'}),
     distPath: flags.string({default: '.assembledocs/dist'}),
   };
 
@@ -66,7 +68,7 @@ export default class Build extends Command {
       })
     );
 
-    const html = renderDocument();
+    const html = renderDocument({basePath: flags.basePath, title: flags.title});
     const sidebar = renderSidebar(sidebarLinks);
 
     await Promise.all([
